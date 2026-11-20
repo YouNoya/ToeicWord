@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+node_modules/
+.openai/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+toeic-tests-answers-*.json
+toeic-day1-4-answers-*.json

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#142d2a">
+  <meta name="description" content="TOEIC Day 1부터 Day 30까지, 그리고 직접 만든 나만의 시험지. 영어 단어의 뜻을 쓰고 복습하세요.">
+  <title>단어 한 칸 · TOEIC Day 1–30</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23142d2a'/%3E%3Cpath d='M18 18h28v29H18z' fill='none' stroke='%2398efb4' stroke-width='3'/%3E%3Cpath d='M25 27h14M25 35h10' stroke='%2398efb4' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="words.js" defer></script>
+  <script src="model.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#worksheet">문제로 바로 가기</a>
+  <aside class="sidebar">
+    <a href="#" class="brand" aria-label="단어 한 칸 홈"><span class="brand-mark" aria-hidden="true">▤</span><span>단어 한 칸<small>MY VOCABULARY NOTE</small></span></a>
+    <div class="side-label">나의 학습 범위</div>
+    <nav id="days" aria-label="Day 선택"></nav>
+    <section class="custom-library"><h2>나만의 시험지</h2><nav id="custom-tests" aria-label="나만의 시험지 선택"></nav><p id="no-custom">내가 고른 단어로 시작해보세요.</p></section>
+    <div class="side-bottom">조금씩, 매일 한 칸.</div>
+  </aside>
+
+  <div class="workspace">
+    <header class="topbar"><span>TOEIC <span class="top-divider">/</span> 뜻 쓰기 연습</span><span id="save-status" class="save-status" role="status">이 브라우저에 자동 저장</span></header>
+    <main>
+      <section class="library-bar" aria-label="시험지 선택 및 만들기"><label for="test-select">학습할 시험지</label><div><select id="test-select"></select><button id="open-creator" class="primary">나만의 시험지 만들기</button></div></section>
+      <section class="intro" aria-labelledby="day-title">
+        <div class="eyebrow">WRITE IT. REMEMBER IT.</div>
+        <div class="title-line"><h1 id="day-title">Day 1 <span>채용</span></h1><span class="total-chip" id="total-chip">68개 단어</span><button id="delete-custom" class="delete-test" hidden>시험지 삭제</button></div>
+        <p>영어를 보고 한국어 뜻을 적어보세요. 다 쓴 뒤 정답을 확인해도 좋아요.</p>
+      </section>
+
+      <section class="progress-panel" aria-label="선택한 Day 학습 현황">
+        <div class="progress-copy"><span>오늘 채운 칸</span><strong><b id="answered">0</b><small id="day-total"> / 68</small></strong><div class="progress-track"><div id="progress-fill"></div></div></div>
+        <div class="stat"><span>기억했어요</span><strong id="correct-count">0</strong></div>
+        <div class="stat"><span>한 번 더 복습</span><strong id="review-count">0</strong></div>
+      </section>
+
+      <section class="worksheet" id="worksheet" aria-label="단어 뜻 입력 문제지">
+        <div class="worksheet-toolbar">
+          <div class="view-tabs" role="group" aria-label="문제 필터"><button id="all-mode" class="active" aria-pressed="true">전체 단어</button><button id="review-mode" aria-pressed="false">복습할 단어 <span id="review-badge">0</span></button></div>
+          <div class="actions"><button id="shuffle" class="quiet">순서 섞기</button><button id="reveal-all" class="primary">정답 확인</button></div>
+        </div>
+        <div class="worksheet-guide"><span id="list-summary">번호 순서 · 68문항</span><span>Enter로 다음 칸 이동</span></div>
+        <div class="column-head" aria-hidden="true"><span>번호</span><span>영단어 / 표현</span><span>내가 기억한 뜻</span></div>
+        <div id="word-list"></div>
+        <div id="empty" class="empty" hidden><span aria-hidden="true">✓</span><h2>복습할 단어가 아직 없어요</h2><p>정답을 확인한 뒤 ‘다시 복습’을 누르면 이곳에 모여요.</p><button id="back-all" class="primary">전체 단어로 돌아가기</button></div>
+      </section>
+
+      <section class="bottom-tools" aria-label="학습 도구"><div><button id="print">문제지 인쇄</button><button id="export">시험지·답안 백업</button><button id="import">백업 불러오기</button><input id="import-file" type="file" accept="application/json,.json" hidden></div><button id="reset" class="danger">이 시험지 초기화</button></section>
+      <p class="footnote" id="source-note">자료: 제공한 PDF의 Day 1–30 · 비슷한 뜻도 맞을 수 있으니 참고 뜻을 보고 직접 체크하세요.<br>입력한 답안과 나만의 시험지는 현재 브라우저에 저장됩니다. 다른 기기로 옮길 때는 백업을 이용하세요.</p>
+    </main>
+    <footer><span>단어 한 칸</span><span>한 칸씩 채워가는 나만의 단어장</span></footer>
+  </div>
+
+  <dialog id="reset-dialog"><form method="dialog"><h2>이 시험지를 처음부터 풀까요?</h2><p>선택한 시험지의 답안과 복습 표시가 지워집니다. 다른 시험지의 답안은 그대로 유지돼요.</p><div><button value="cancel">취소</button><button value="reset" class="danger-solid">초기화</button></div></form></dialog>
+  <dialog id="creator-dialog"><form id="creator-form"><div class="creator-heading"><div class="eyebrow">MAKE YOUR OWN</div><h2>나만의 시험지 만들기</h2><p>외우고 싶은 단어를 붙여 넣으면 뜻 쓰기 시험지가 만들어져요.</p></div><label for="custom-title">시험지 이름</label><input id="custom-title" maxlength="80" placeholder="예: 이번 주 헷갈린 단어" required><label for="custom-words">영단어 / 표현</label><textarea id="custom-words" rows="9" maxlength="100000" placeholder="resume&#10;take advantage of&#10;fatigue&#10;apple 사과" aria-describedby="custom-hint custom-preview" required></textarea><p class="input-help" id="custom-hint">한 줄에 한 단어·표현을 넣어주세요. 영어만 입력할 때는 쉼표로 구분해도 돼요.<br>PDF에 있는 단어는 참고 뜻을 자동 연결합니다. 없는 단어는 <b>apple 사과</b>처럼 뜻을 함께 넣을 수 있어요.</p><div id="custom-preview" class="custom-preview" role="status">단어를 입력하면 개수를 확인할 수 있어요.</div><p id="creator-error" class="form-error" role="alert" hidden></p><div class="creator-actions"><button type="button" id="cancel-creator">취소</button><button type="submit" class="primary">시험지 만들기</button></div></form></dialog>
+  <dialog id="delete-dialog"><form method="dialog"><h2>이 시험지를 삭제할까요?</h2><p>선택한 나만의 시험지와 해당 답안이 삭제됩니다. 다른 시험지는 유지돼요. 필요하면 먼저 백업해주세요.</p><div><button value="cancel">취소</button><button value="delete" class="danger-solid">삭제</button></div></form></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p>이 학습장은 JavaScript가 켜져 있어야 사용할 수 있어요.</p></noscript>
+</body>
+</html>
